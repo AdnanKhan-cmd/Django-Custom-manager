@@ -1,0 +1,70 @@
+<!doctype>
+<html>
+<head>
+<title> List: Demo Task</title>
+<style>
+.movie_list{
+    width: 300px;
+    float: left;
+    margin: 0 14px;
+    height: 430px;
+    text-decoration: none;
+}
+.movie_list *{
+    color:black;
+    font-weight: 100;
+}
+img.titleimg {
+    width: 100%;
+    height: 320px;
+    display: block; margin-left: auto;
+}
+h4.titletext {
+    margin: 0;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 18pt;
+}
+body{
+    margin: 40px;
+}
+</style>
+</head>
+<body>
+    <h1>Movie Listings @ GV Cinema</h1>
+    <input placeholder="Search movies..." >
+    <br>
+    <section>
+        <h2>Popular Movies this month</h2>
+        <div id="movies">
+        {% for a_movie in raw_data %}
+        <a class="movie_list" href="{% url 'details' a_movie.id %}">
+            <img class="titleimg" src="{{ a_movie.image }}" >
+            <h4 class="titletext"> {{ a_movie.name }}</h4>
+            <b class="duration"> {{ a_movie.duration }} min</b> <br>
+            <b class="rating"> user rating: {{ a_movie.userRating }} </b>
+        </a>
+        {% endfor %}
+        </div>
+    </section>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"> </script>
+<script>
+$('input').keyup(function(e) {
+    url = "{% url 'ajax' %}";
+    url += "?query=" + $('input').val();
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            $("#movies").html('');
+            res.forEach(movie => {
+                tmp_movies = '<a class="movie_list" href="/details/' + movie.id +  '"> <img class="titleimg" src="' + movie.image  + '" > <h4 class="titletext"> ' + movie.name + ' </h4> <b class="duration">  ' + movie.duration + ' min</b> <br> <b class="rating"> user rating: ' + movie.userRating + ' </b></a>';
+                $("#movies").append(tmp_movies);
+            });
+        }
+    });
+});
+</script>
+</html>

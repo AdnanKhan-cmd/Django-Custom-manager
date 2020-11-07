@@ -1,0 +1,62 @@
+<!doctype>
+<html>
+<head>
+<title> Detail: {{ raw_detail.name }}</title>
+<style>
+h2, h1{
+    margin: 0;
+}
+sub{
+    font-size: 11pt;
+    font-family: sans-serif;
+}
+body{
+    margin: 50px;
+}
+section{
+    float: left;
+}
+.left{
+    width: 300px;
+    margin: 10px 0px;
+}
+.right{
+    width: 500px;
+    margin: 0 15px;
+}
+img{
+    width: 100%;
+}
+.right a {
+    line-height: 25px;
+}
+h4, h3 {
+    font-size: 18pt;
+    margin: 8px 0 0 0;
+}
+</style>
+</head>
+<body>
+    <h1>Movie Listings @ GV Cinema</h1>
+    <button onclick="window.open('{% url "home" %}')"> back </button>
+    <h2>{{ raw_detail.name }}</h2>
+    <sub>(pg: some etc)</sub>
+    <br>
+    <section class="left">
+        <img src="{{ raw_detail.image }}">
+    </section>
+    <section class="right">
+        <h3>Details</h3>
+        <a> Genre: {{ raw_detail.genre_list }}</a> <br>
+        <a> duration: {{ raw_detail.userRating }} minutes </a><br>
+        <a> User Raing: {{ raw_detail.userRating }}</a><br>
+        <h4> Synoposis</h4>
+        <p>
+ 
+                {{ raw_detail.description|safe  }}
+        </p>
+    </section>
+</body>
+
+
+</html>
